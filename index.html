@@ -2,79 +2,610 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Love Written in Code</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+  <title>Love Vibes – Pro Max 💘</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #ffb6ff 0, #b0f3f1 40%, #1a1027 100%);
+      overflow: hidden;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+    }
+
+    /* Animated gradient overlay */
+    .bg-gradient {
+      position: fixed;
+      inset: -30%;
+      background: conic-gradient(
+        from 0deg,
+        #ff4b91,
+        #ffe5b4,
+        #b0f3f1,
+        #9b5de5,
+        #ff4b91
+      );
+      mix-blend-mode: screen;
+      opacity: 0.26;
+      filter: blur(36px);
+      animation: spinGradient 35s linear infinite;
+      z-index: -2;
+    }
+
+    @keyframes spinGradient {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Canvas hearts background */
+    #bgCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+    }
+
+    .wrapper {
+      position: relative;
+      width: min(460px, 92vw);
+      padding: 18px;
+    }
+
+    .card-3d {
+      position: relative;
+      border-radius: 28px;
+      padding: 26px 24px 20px;
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 60%),
+                  rgba(8, 8, 20, 0.84);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.75),
+        0 0 40px rgba(255, 182, 255, 0.25);
+      transform-style: preserve-3d;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      overflow: hidden;
+    }
+
+    .card-3d::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 192, 203, 0.33), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(176, 243, 241, 0.28), transparent 55%);
+      opacity: 0.75;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    /* Top tiny label */
+    .pill {
+      position: absolute;
+      top: 16px;
+      left: 24px;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(18px);
+      z-index: 2;
+    }
+
+    .heart-orbit {
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.75;
+      animation: orbitSpin 14s linear infinite;
+      z-index: 1;
+    }
+
+    .heart-orbit span {
+      font-size: 32px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    @keyframes orbitSpin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .heart-main {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      transform: translateZ(40px);
+    }
+
+    .heart-main-inner {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #ff4b91 55%, #7b1fa2 100%);
+      box-shadow:
+        0 0 22px rgba(255, 75, 145, 0.9),
+        0 0 55px rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: beat 1.6s ease-in-out infinite;
+    }
+
+    .heart-main-inner span {
+      font-size: 42px;
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.9));
+    }
+
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      25% {
+        transform: scale(1.07);
+      }
+      50% {
+        transform: scale(0.97);
+      }
+      75% {
+        transform: scale(1.05);
+      }
+    }
+
+    h1 {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 1.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transform: translateZ(30px);
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 0.86rem;
+      opacity: 0.82;
+      margin-top: 6px;
+      transform: translateZ(25px);
+    }
+
+    .typewriter {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.98rem;
+      min-height: 1.4em;
+      white-space: nowrap;
+      overflow: hidden;
+      transform: translateZ(30px);
+    }
+
+    #type-text {
+      font-weight: 500;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      animation: blink 0.9s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% {
+        opacity: 1;
+      }
+      50.01%, 100% {
+        opacity: 0;
+      }
+    }
+
+    .names {
+      margin-top: 14px;
+      text-align: center;
+      letter-spacing: 0.18em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      transform: translateZ(20px);
+    }
+
+    .names span {
+      background: linear-gradient(120deg, #ffb6ff, #ffe5b4, #b0f3f1);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 600;
+    }
+
+    .compliment {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 0.82rem;
+      opacity: 0.88;
+      transform: translateZ(18px);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+      transform: translateZ(35px);
+    }
+
+    button {
+      border: none;
+      outline: none;
+      padding: 9px 20px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 500;
+      background: radial-gradient(circle at 0 0, #ffe5f0, #ff4b91 45%, #7b1fa2 100%);
+      color: #fff;
+      box-shadow:
+        0 12px 22px rgba(0, 0, 0, 0.55),
+        0 0 20px rgba(255, 75, 145, 0.75);
+      transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        filter 0.18s ease,
+        background 0.18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.6), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.22s ease;
+    }
+
+    button:hover::after {
+      opacity: 1;
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow:
+        0 18px 28px rgba(0, 0, 0, 0.75),
+        0 0 26px rgba(255, 182, 255, 0.9);
+      filter: brightness(1.06);
+    }
+
+    button:active {
+      transform: translateY(0) scale(0.97);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.7),
+        0 0 16px rgba(255, 140, 200, 0.8);
+    }
+
+    .hint {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 0.76rem;
+      opacity: 0.7;
+      transform: translateZ(15px);
+    }
+
+    /* Heart rain on click */
+    .burst-heart {
+      position: fixed;
+      bottom: -8vh;
+      font-size: 24px;
+      pointer-events: none;
+      animation: floatUp linear forwards;
+      will-change: transform, opacity;
+      z-index: 999;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translate3d(0, 0, 0) scale(0.8) rotate(0deg);
+        opacity: 1;
+      }
+      60% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(0, -135vh, 0) scale(1.4) rotate(22deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-3d {
+        padding: 24px 18px 18px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .heart-main-inner {
+        width: 76px;
+        height: 76px;
+      }
+      .subtitle {
+        padding: 0 8px;
+      }
+      .controls {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="bg-glow"></div>
-  <div class="floating-hearts">
-    <span class="heart h1"></span>
-    <span class="heart h2"></span>
-    <span class="heart h3"></span>
-    <span class="heart h4"></span>
-    <span class="heart h5"></span>
-  </div>
+  <!-- Background layers -->
+  <canvas id="bgCanvas"></canvas>
+  <div class="bg-gradient"></div>
 
-  <main class="wrapper">
-    <section class="card">
-      <div class="tag-row">
-        <div class="chip">love_theme.cutu()</div>
-        <div class="tiny-dot"></div>
+  <div class="wrapper">
+    <div class="card-3d" id="card3d">
+      <div class="pill">Soft love • Night mode</div>
+
+      <div class="heart-orbit">
+        <span>❤</span>
       </div>
 
-      <header class="hero">
-        <div class="hero-heart"></div>
-        <p class="hero-eyebrow">A tiny web page for oversized feelings</p>
-        <h1>Love, but make it <span>Code</span>.</h1>
-        <p class="hero-sub">
-          Kabhi kabhi words kam pad jaate hain, isliye ye repo hai –
-          thoda HTML, thoda CSS, thoda tum.
-        </p>
-      </header>
-
-      <section class="code-card">
-        <div class="code-header">
-          <span class="dot red"></span>
-          <span class="dot yellow"></span>
-          <span class="dot green"></span>
-          <span class="filename">love_story.js</span>
+      <div class="heart-main">
+        <div class="heart-main-inner">
+          <span>❤</span>
         </div>
-        <pre class="code-block"><code><span class="kw">const</span> you = <span class="str">"my favorite constant"</span>;
-<span class="kw">let</span> us = <span class="fn">Promise</span>.resolve(<span class="num">forever</span>);
+      </div>
 
-<span class="kw">function</span> <span class="fn">love</span>(me, you) {
-  <span class="kw">return</span> me.<span class="fn">heart</span>.syncWith(you.heartbeat);
-}
+      <h1>Love Frequency</h1>
+      <p class="subtitle">Jab tum online hote ho, dil ka network full bars ho jata hai. 📶💕</p>
 
-<span class="kw">while</span> (life.isRunning) {
-  love(<span class="str">"me"</span>, you);
-}</code></pre>
-      </section>
+      <div class="typewriter">
+        <span id="type-text"></span><span class="cursor">|</span>
+      </div>
 
-      <section class="generator">
-        <h2>✨ Live Love Generator</h2>
-        <p class="gen-sub">
-          Button dabao, ek naya love-message milega – har click pe
-          thoda sa “aww”.
-        </p>
+      <p class="names">
+        <span>Dilip</span> & <span>khushi</span>
+      </p>
 
-        <div class="bubble" id="messageBubble">
-          Click “Generate Love” to start. 💖
-        </div>
+      <p class="compliment" id="compliment">
+        Tumhare vibes ekdum lo-fi + comfort playlist jaisi hain.
+      </p>
 
-        <button id="generateBtn">
-          Generate Love 💌
-        </button>
-      </section>
+      <div class="controls">
+        <button id="loveBtn">Heart Rain ☔❤</button>
+        <button id="musicBtn">Play Music 🎵</button>
+        <button id="lineBtn">New Compliment ✨</button>
+      </div>
 
-      <footer class="footer">
-        <p>Made with &lt;/&gt; &amp; ❤️ by <span class="name">Khushi</span></p>
-        <p class="hint">Push to GitHub • Turn on GitHub Pages • Share the link 😉</p>
-      </footer>
-    </section>
-  </main>
+      <p class="hint">Tip: Card pe mouse ghumao → 3D tilt, button spam karo → full pyaar storm. 💫</p>
+    </div>
+  </div>
 
-  <script src="script.js"></script>
+  <!-- Background music (NOTE: src ko apni MP3 se replace karo) -->
+  <audio id="bgMusic" loop>
+    <!-- ReelAudio-73057.mp3 -->
+    <source src="ReelAudio-73057.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    // ---------------- TYPEWRITER ----------------
+    const lines = [
+      "Tum aao toh din slow motion me cute lagne lagta hai.",
+      "Koi special reason nahi, bas tum ho isliye sab accha lagta hai.",
+      "Tum online aate ho, dil ne already 'seen' kar diya hota hai.",
+      "Tum meri favourite aadat ho, jisse main kabhi chhodna nahi chahta/chahti."
+    ];
+
+    const typeSpan = document.getElementById("type-text");
+    let lineIndex = 0;
+    let charIndex = 0;
+    let typing = true;
+
+    function typeLoop() {
+      const current = lines[lineIndex];
+
+      if (typing) {
+        if (charIndex < current.length) {
+          typeSpan.textContent += current.charAt(charIndex);
+          charIndex++;
+          setTimeout(typeLoop, 65);
+        } else {
+          typing = false;
+          setTimeout(typeLoop, 1400);
+        }
+      } else {
+        if (charIndex > 0) {
+          typeSpan.textContent = current.substring(0, charIndex - 1);
+          charIndex--;
+          setTimeout(typeLoop, 38);
+        } else {
+          typing = true;
+          lineIndex = (lineIndex + 1) % lines.length;
+          setTimeout(typeLoop, 450);
+        }
+      }
+    }
+
+    // ---------------- COMPLIMENT CHANGER ----------------
+    const complimentEl = document.getElementById("compliment");
+    const compliments = [
+      "Tumhare saath chat karna daily therapy + comedy show combo jaisa hai.",
+      "Tumhara 'hi' bhi itna cute hota hai ki mood reset ho jata hai.",
+      "Tum khud nahi samajh paogi kitne logon ki favourite notification ho tum.",
+      "Real me ho ya online, tumhara aura ekdum soft pink highlight jaisa hai.",
+      "Tumhari hassi ko ringtone bana du? Har baar sun ke khush ho jaun."
+    ];
+
+    function setRandomCompliment() {
+      const random = compliments[Math.floor(Math.random() * compliments.length)];
+      complimentEl.textContent = random;
+    }
+
+    // ---------------- HEART RAIN ----------------
+    function spawnBurstHearts(count) {
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const heart = document.createElement("div");
+          heart.className = "burst-heart";
+          heart.textContent = "❤";
+
+          const size = 18 + Math.random() * 26;
+          const left = Math.random() * 100;
+          const duration = 3 + Math.random() * 2;
+          const hue = 330 + Math.random() * 40;
+
+          heart.style.left = left + "vw";
+          heart.style.fontSize = size + "px";
+          heart.style.animationDuration = duration + "s";
+          heart.style.color = `hsl(${hue}, 90%, 70%)`;
+          heart.style.textShadow = "0 0 16px rgba(255,255,255,0.9)";
+
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), duration * 1000);
+        }, i * 80);
+      }
+    }
+
+    const loveBtn = document.getElementById("loveBtn");
+    loveBtn.addEventListener("click", () => {
+      spawnBurstHearts(22);
+      loveBtn.style.transform = "translateY(-2px) scale(1.05)";
+      setTimeout(() => {
+        loveBtn.style.transform = "";
+      }, 130);
+    });
+
+    // ---------------- MUSIC TOGGLE ----------------
+    const musicBtn = document.getElementById("musicBtn");
+    const bgMusic = document.getElementById("bgMusic");
+    let isPlaying = false;
+
+    musicBtn.addEventListener("click", async () => {
+      try {
+        if (!isPlaying) {
+          await bgMusic.play();
+          isPlaying = true;
+          musicBtn.textContent = "Pause Music ⏸";
+        } else {
+          bgMusic.pause();
+          isPlaying = false;
+          musicBtn.textContent = "Play Music 🎵";
+        }
+      } catch (e) {
+        console.log("Autoplay blocked by browser", e);
+      }
+    });
+
+    // ---------------- COMPLIMENT BUTTON ----------------
+    const lineBtn = document.getElementById("lineBtn");
+    lineBtn.addEventListener("click", () => {
+      setRandomCompliment();
+      lineBtn.style.transform = "translateY(-2px) scale(1.03)";
+      setTimeout(() => {
+        lineBtn.style.transform = "";
+      }, 120);
+    });
+
+    // ---------------- 3D CARD TILT ----------------
+    const card3d = document.getElementById("card3d");
+
+    card3d.addEventListener("mousemove", (e) => {
+      const rect = card3d.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const midX = rect.width / 2;
+      const midY = rect.height / 2;
+
+      const rotateX = ((y - midY) / midY) * -10; // up-down
+      const rotateY = ((x - midX) / midX) * 12;  // left-right
+
+      card3d.style.transform =
+        `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
+      card3d.style.boxShadow =
+        `0 28px 70px rgba(0,0,0,0.9), 0 0 42px rgba(255,182,255,0.4)`;
+    });
+
+    card3d.addEventListener("mouseleave", () => {
+      card3d.style.transform = "rotateX(0deg) rotateY(0deg)";
+      card3d.style.boxShadow =
+        "0 24px 60px rgba(0,0,0,0.75), 0 0 40px rgba(255,182,255,0.25)";
+    });
+
+    // ---------------- CANVAS FLOAT HEARTS ----------------
+    const canvas = document.getElementById("bgCanvas");
+    const ctx = canvas.getContext("2d");
+    let hearts = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function createHeart() {
+      return {
+        x: Math.random() * canvas.width,
+        y: canvas.height + Math.random() * 80,
+        speed: 0.4 + Math.random() * 0.8,
+        drift: (Math.random() - 0.5) * 0.3,
+        size: 14 + Math.random() * 8,
+        alpha: 0.3 + Math.random() * 0.3
+      };
+    }
+
+    for (let i = 0; i < 36; i++) {
+      hearts.push(createHeart());
+    }
+
+    function drawHearts() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      hearts.forEach((h) => {
+        ctx.save();
+        ctx.globalAlpha = h.alpha;
+        ctx.font = `${h.size}px system-ui`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("❤", h.x, h.y);
+        ctx.restore();
+
+        h.y -= h.speed;
+        h.x += h.drift;
+
+        if (h.y < -40 || h.x < -40 || h.x > canvas.width + 40) {
+          Object.assign(h, createHeart(), { y: canvas.height + 40 });
+        }
+      });
+
+      requestAnimationFrame(drawHearts);
+    }
+
+    // ---------------- INIT ----------------
+    window.addEventListener("load", () => {
+      typeLoop();
+      setRandomCompliment();
+      drawHearts();
+    });
+  </script>
 </body>
 </html>
